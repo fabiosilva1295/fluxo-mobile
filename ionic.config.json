@@ -1,0 +1,7 @@
+{
+  "name": "fluxo-agil",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

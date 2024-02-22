@@ -1,0 +1,39 @@
+<div class="w-screen h-screen screen flex align-items-center flex-column justify-content-around">
+  <header>
+    <img src="assets/logos/logo-1.svg" alt="">
+    
+  </header>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="grid m-0 px-4">
+    <div class="col-12">
+      <div class="p-input-icon-left w-full">
+        <input (focus)="submited = false" [ngClass]="{'ng-dirty': submited && email.errors}" formControlName="email" class="w-full" placeholder="E-email" type="text" pInputText>
+        <i class="pi pi-user"></i>
+      </div>
+      <div class="mt-2 pl-2" *ngIf="submited && email.errors">
+        <span class="mt-2 text-red-600" *ngIf="email.errors['required']">E-mail é obrigatório</span>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="p-input-icon-left w-full">
+        <input (focus)="submited = false" [ngClass]="{'ng-dirty': submited && password.errors}" formControlName="password" class="w-full" type="text" pInputText placeholder="Senha">
+        <i class="pi pi-lock"></i>
+      </div>
+      <div *ngIf="submited && password.errors" class="mt-2 ">
+        <span class="text-red-600" *ngIf="submited && password.errors['required']">Senha é obrigatório</span>
+      </div>
+    </div>
+    <div class="col-12 mt-3">
+      <p-button [loading]="loading" (click)="onSubmit()" styleClass="w-full" label="Entrar"></p-button>
+    </div>
+    <div class="col-12 mt-5">
+      <p-divider align="center">ou</p-divider>
+    </div>
+  </form>
+
+  <footer class="w-full text-center px-4">
+    <ion-nav-link router-direction="forward" [component]="component">
+      <span class="text-sm">Ainda não tem uma conta? <span class="text-base ml-1 font-medium text-indigo-500">Cadastre-se agora</span></span>
+    </ion-nav-link>
+  </footer>
+</div>

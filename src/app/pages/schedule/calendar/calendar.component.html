@@ -1,0 +1,24 @@
+<div class="cal">
+  <div class="monthline">
+    <div class="month">
+      <p class="text-primary">{{currentMonth}} de {{currentYear}}</p>
+    </div>
+
+    <div class="monthChange">
+      <ion-icon name="arrow-back-outline" (click)="moveDate('prev')"></ion-icon>
+      <ion-icon name="arrow-forward-outline" (click)="moveDate('next')"></ion-icon>
+    </div>
+  </div>
+
+  <div #container class="week">
+    <div #target (click)="dateClicked(data.localDate)" [ngClass]="data.isToday? 'today square': ''" class="dayOfWeek" *ngFor="let data of cells">
+      <div  (click)="scroll(target, container)" class="weekDay">
+        <p class="m-0">{{data.day}}</p>
+      </div>
+
+      <div class="weekNumber">
+        <p class="m-0">{{data.date}}</p>
+      </div>
+    </div>
+  </div>
+</div>

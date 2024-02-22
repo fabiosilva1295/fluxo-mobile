@@ -1,0 +1,18 @@
+<ion-header *ngIf="personal_data" class="ion-no-border p-3 pt-5">
+    <ion-toolbar color="translucent" no-border>
+      <ion-buttons slot="end">
+        <ion-avatar>
+            <ion-img [src]="personal_data.profile_image"></ion-img>
+        </ion-avatar>
+      </ion-buttons>
+
+      <ion-buttons class="flex flex-column align-items-start">
+        <span class="text-400 font-light text-xl">Olá <span class="font-light">{{getFirstName()}}</span></span>
+        <span class="text-2xl mt-1 font-bold text-500">Você não tem</span>
+        <span class="text-2xl mt-1 font-bold text-600">Consultas marcadas</span>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+       
+</ion-content>
