@@ -47,4 +47,56 @@
     border-radius: 5px;
 }
 
+.arrow {
+    width: 60px;
+    height: 60px;
+    background: var(--surface-50);
+    border-radius: 50%;
 
+    &.arrow-left {
+        position: absolute;
+        left: -100%;
+        transition: all 0.078s ease;
+        
+        &.hide {
+            animation: slideBackLeft 0.4s ease;
+        }
+    }
+    &.arrow-right {
+        position: absolute;
+        right: -100%;
+        transition: all 0.078s ease;
+
+        &.hide {
+            animation: slideBackRight 0.4s ease;
+        }
+        
+    }
+}
+
+@keyframes slideBackLeft {
+    0%{
+        transform: translateX(0);
+    }100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideBackRight {
+    0%{
+        transform: translateX(0);
+    }100% {
+        transform: translateX(100%);
+    }
+}
+
+
+
+
+.arrow-container {
+    position: fixed;
+    top: calc(100vh / 2);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}

@@ -1,8 +1,14 @@
 ion-tabs {
+    
     ion-tab-bar {
+        animation: showTab 0.2s ease;
         min-height: 5vh;
         border: none;
         padding: 1rem;
+
+        &.hide {
+            animation: hideTab 0.2s ease;
+        }
         
       ion-tab-button {
 
@@ -43,6 +49,24 @@ ion-tabs {
             
         }
       }
+    }
+}
+
+
+
+@keyframes showTab {
+    0% {
+        transform: translateY(500px);
+    }100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes hideTab {
+    0% {
+        transform: translateY(0);
+    }100% {
+        transform: translateY(500px);
     }
 }
 

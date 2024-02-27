@@ -1,17 +1,19 @@
-<ion-content class="ion-padding py-4" [fullscreen]="false">
+<ion-content (touchstart)="startGesture($event)" (touchend)="endGesture($event)"  id="open-action-sheet-empty-cell"  class="ion-padding py-4" [fullscreen]="false">
   <section class="py-3 max-h-full">
     <article   *ngFor="let time of hours; index as i" class="hour-container flex gap-3 w-full py-0 px-2" >
       <div class="hour">
         <span class="text-400">{{time.initial_hour}}</span>
       </div>
-      <div class="queries p-1 px-0 flex flex-1">
-        <div  id="open-action-sheet" *ngIf="time.appointments" class="w-full flex flex-column gap-2 h-full">
+
+      <!-- full cell -->
+      <div    *ngIf="time.appointments; else elseBlock"  class="queries p-1 px-0 flex flex-1">
+        <div  id="open-action-sheet" class="w-full flex flex-column gap-2 h-full">
           <div *ngFor="let appointment of time.appointments; index as i" class="card w-full h-full shadow-1 p-2">
             <div class="header flex justify-content-between">
               <div class="competitor flex gap-2">
                 <p-avatar  [icon]="appointment.competitor.profile_image" size="large"></p-avatar>
                 <div class="name-email flex justify-content-center gap-1 flex-column">
-                  <span class="text-sm font-semibold">{{appointment.competitor.name}}</span>
+                  <span class="text-sm font-semibold">{{getNameSurname(appointment.competitor.name)}}</span>
                   <span class="text-sm text-400">{{appointment.competitor.email}}</span>
                 </div>
               </div>
@@ -20,20 +22,37 @@
           </div>
         </div>
       </div>
+
+      <!-- empty cell -->
+      <ng-template #elseBlock>
+        <div  id="open-action-sheet-empty-cell" class="queries p-1 px-0 flex flex-1">
+        </div>
+      </ng-template>
     </article>
   </section>
 
-  <ion-content>
-    
-  </ion-content>
+  <ion-action-sheet
+    trigger="open-action-sheet-empty-cell"
+    class="my-custom-class"
+    header="Selecione a opção desejada"
+    [buttons]="actions_buttons_empty_cell">
+ 
+  </ion-action-sheet>
 
   <ion-action-sheet
     trigger="open-action-sheet"
     class="my-custom-class"
-    header="Example header"
-    subHeader="Example subheader"
+    header="Selecione a opção desejada"
+    [buttons]="actions_buttons">
+ 
+  </ion-action-sheet>
 
-  >
-  content
-</ion-action-sheet>
+  <div class="w-full arrow-container">
+    <div class="arrow shadow-1 arrow-left flex align-items-center justify-content-center">
+      <i class="pi pi-arrow-left"></i>
+    </div>
+    <div class="arrow shadow-1 arrow-right flex align-items-center justify-content-center">
+      <i class="pi pi-arrow-right9"></i>
+    </div>
+  </div>
 </ion-content>

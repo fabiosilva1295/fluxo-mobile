@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment'
 import { EventComponent } from '../event/event.component';
+import { ActionSheetButton } from '@ionic/angular';
+import { IonNav } from '@ionic/angular/common';
+import { Router } from '@angular/router';
+import { ScheduleService } from 'src/app/services/schedule.service';
 
 @Component({
   selector: 'fluxo-timeline',
@@ -8,8 +12,15 @@ import { EventComponent } from '../event/event.component';
   styleUrls: ['./timeline.component.scss'],
 })
 export class TimelineComponent  implements OnInit {
+  
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private scheduleService: ScheduleService
+  ) { }
+
+  //swip navigation options 
+  initial_screenX_touch: number;
 
   //Initial and final Day
   initial_hour_date: Date;
@@ -24,8 +35,45 @@ export class TimelineComponent  implements OnInit {
   //teste show action sheet
   show: boolean = false;
 
-  component: EventComponent 
+  //actions buttons empty cell 
+  actions_buttons_empty_cell: ActionSheetButton[] = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+      data: {
+        action: 'cancel'
+      }
 
+    }
+  ]
+
+  //actions buttons 
+  actions_buttons: ActionSheetButton[] = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+      data: {
+        action: 'cancel'
+      }
+
+    },
+    {
+      text: 'Editar',
+      handler: () => {
+        this.router.navigate(['/tabs/schedule/12'])
+        return true
+      },
+    },
+    {
+      text: 'Excluir',
+      role: 'destructive',
+      data: {
+        action: 'delete'
+      }
+    }
+  ]
+
+  private initialPoint: { x: number, y: number };
 
 
   ngOnInit() {
@@ -67,12 +115,49 @@ export class TimelineComponent  implements OnInit {
           }
         ]
 
-        console.log(period['queries'])
+     
       }
-      console.log(period)
       hours.push(period);
       increment ++
       this.hours = hours;
+    }
+  }
+
+  getNameSurname(name: string) {
+    const names = name.split(' ')
+    return `${names[0]} ${names[names.length - 1]}`
+  }
+
+
+  startGesture(event: TouchEvent): void {
+    
+    this.initialPoint = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+  }
+
+  endGesture(event: TouchEvent): void {
+    
+    const finalPoint = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+
+    const horizontalDifference = finalPoint.x - this.initialPoint.x;
+    const verticalDifference = finalPoint.y - this.initialPoint.y;
+
+    const horizontalThreshold = 170;
+    const verticalThreshold = 30;
+
+    if (Math.abs(horizontalDifference) > horizontalThreshold) {
+      if (horizontalDifference < 0) {
+        alert('Gesto para esquerda');
+      } else {
+        alert('Gesto para direita');
+      }
+    } else if (Math.abs(verticalDifference) > verticalThreshold) {
+      if (verticalDifference < 0) {
+        alert('Gesto para cima');
+      } else {
+        alert('Gesto para baixo');
+      }
+    } else {
+      alert('Desistiu do gesto');
     }
   }
 

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ScheduleService } from 'src/app/services/schedule.service';
 
 @Component({
   selector: 'fluxo-calendar',
@@ -10,7 +11,11 @@ export class CalendarComponent implements OnInit {
   @ViewChild('container') elementContainer!: ElementRef
   @ViewChildren('target') target!: QueryList<any>
 
-  constructor() { }
+  constructor(
+    private scheduleService: ScheduleService
+  ) { }
+
+
   cells: any[] = []
   date = new Date();
 
@@ -50,7 +55,10 @@ export class CalendarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.renderDate()
+    this.renderDate();
+    this.scheduleService.changed_date_width_slide$.subscribe((option: string) =>  {
+      this.moveDate(option)
+    })
   }
   
 
